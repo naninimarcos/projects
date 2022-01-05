@@ -1,0 +1,540 @@
+```{r}
+library(tibble)
+as_tibble(iris)
+
+```
+
+```{r}
+library(tibble)
+tibble(
+  `(:` = "smile",
+  ` ` = "space",
+  `2000` = "number"
+)
+```
+```{r}
+library(tibble)
+data.frame(
+  `(:` = "smile",
+  ` ` = "space",
+  `2000` = "number")
+```
+```{r}
+tribble(
+  ~x,~y,~z,"a",2,3.6,"b",1,8.5
+)
+```
+```{r}
+tibble(
+  a = lubridate::now() + runif(1e3) * 86400,
+  b = lubridate::today() + runif(1e3) * 30,
+  c = 1:1e3,
+  d = runif(1e3),
+  e = sample(letters, 1e3, replace = TRUE)
+)
+```
+```{r}
+v <- c(2, 5.5,6,9)
+t <- c(8,2.5,14,9)
+v<t
+v>t
+v==t
+```
+
+
+AND -> &
+OR -> |
+NOT -> !
+
+```{r}
+v1 <- c(TRUE, TRUE,FALSE,FALSE)
+v2 <- c(TRUE,FALSE,TRUE,FALSE)
+v1 & v2
+v1 | v2
+!v1
+!v2
+
+
+
+```
+
+
+
+
+0 cuenta como falso
+todo numero distinto a 0 cuenta como true = 1
+```{r}
+v <- c(3,0,TRUE, 54534)
+t <- c(-4,0,FALSE, 3234)
+v & t
+!v
+!t
+v | t
+```
+
+CONDITIAN STATEMEns
+```{r}
+var <- 10
+if ( var > 10) {
+  print ("var is greater than 10")
+} else {
+  print("var is less than or equal to 10")
+}
+print("hello,word!")
+```
+
+```{r}
+var <- 10
+var2 <- "hi"
+if (var > 10 & var2 == "hi"){
+  print("that works!")
+}
+```
+
+
+```{r}
+LETTERS
+v <- LETTERS[1:4]
+for (i in v){
+  print(i)
+}
+```
+
+
+
+```{r}
+seq(32,44,by = 2)
+sum(1:50)
+
+
+
+```
+
+
+```{r}
+ data <- c("East","West","East","North","North","East","West","West","West","East",
+           "North","West")
+data_factor <- factor(data)
+unique(data)
+levels(data_factor)
+as.integer(data_factor)
+sort(data_factor)
+data_factor_new <- factor(data_factor,levels = c("East","West","North"))
+is.integer(data_factor) == is.integer(data_factor_new)
+
+
+```
+```{r}
+data_factor_complete <- factor(data_factor,levels = c("East","West","North","South"))
+table(data_factor_complete)
+```
+
+
+
+```{r}
+library(forcats)
+fct_infreq(data_factor_complete)
+```
+
+
+
+```{r}
+library(lubridate)
+today()
+now()
+string <- "2017-01-01"
+date <- ymd(string)
+date
+date2 <- mdy("January 31st,2017")
+date2
+dmy("31-Jan-2017")
+
+#creating date objects from numbers
+ymd(20170130)
+#
+ymd_hms("2017-01-31 20:11:59")
+#
+mdy_hm("01/05/2019 08:16")
+```
+
+
+FUNTIONAL PROGRAMMING
+```{r}
+rep(10,10)
+runif(10)
+values <- lapply(rep(10,10),runif)
+lapply(values,mean)
+
+means <- unlist(lapply(values,mean))
+means
+
+unlist(means)
+nchar("hey")
+
+car_names <- rownames(mtcars)
+unlist(lapply(car_names,nchar))
+lapply(car_names,nchar)
+car_names[4]
+#
+random_function <- function(name){
+  if (mtcars[name, 9] == 0)
+  mtcars[name,1]
+  else
+    mtcars[name,1]^2 
+}
+mtcars
+#
+unlist(lapply(rownames(mtcars),random_function))
+#
+unlist(lapply(rownames(mtcars),function(name) {
+  if(mtcars[name,9]== 0)
+    mtcars[name,1]
+  else
+    mtcars[name,1]^2
+}))
+
+
+
+
+
+```
+#data import
+```{r}
+library(readr)
+texts <- read_csv("texts.csv")
+View(texts)
+
+```
+
+
+```{r}
+iris
+
+```
+
+```{r}
+write_csv(iris,"iris.csv")
+read.csv("iris.csv")
+```
+
+
+
+```{r}
+
+```
+
+############################
+
+```{r}
+library(ggplot2)
+mpg
+```
+```{r}
+dplyr::glimpse(mpg)
+```
+```{r}
+str(mpg)
+```
+
+```{r}
+summary(mpg)
+```
+```{r}
+skimr::skim(mpg)
+```
+```{r}
+mpg$displ
+```
+```{r}
+mpg$hwy
+
+```
+```{r}
+library(dplyr)
+mpg %>%
+  select(displ,hwy)
+```
+```{r}
+ggplot(data = mpg)
+```
+```{r}
+ggplot(data = mpg,mapping = aes(x = displ, y = hwy))
+```
+```{r}
+ggplot(data = mpg,mapping = aes(x = displ, y = hwy)) +
+  geom_point()
+```
+###################################################################################
+###################################################################################
+###################################################################################
+```{r}
+library(ggplot2)
+mpg
+ggplot(mpg,aes(displ,hwy)) +
+  geom_point()
+mpg$displ %>% max()
+mpg$displ %>% min()
+```
+
+```{r}
+p <- ggplot(mpg,aes(displ,hwy,color = class))
+p + geom_point()
+```
+```{r}
+p <- ggplot(mpg,aes(displ,hwy,size = class))
+p + geom_point()
+```
+
+```{r}
+p <- ggplot(mpg,aes(displ,hwy,shape = class))
+p + geom_point()
+```
+
+```{r}
+ggplot(data = mpg)+
+  geom_point(mapping = aes(displ,hwy),color = "blue", size = 3,alpha = 1/2,shape= 8)
+```
+###################################################################################
+##################SINGLE VARIABLE PLOTS#######################################
+###################################################################################
+```{r}
+library(ggplot2)
+mpg
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = displ))
+```
+```{r}
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = displ),bins = 10)
+```
+```{r}
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = displ),bins = 50)
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_freqpoly(mapping = aes(x = displ))
+```
+```{r}
+ggplot(data = mpg) +
+  geom_freqpoly(mapping = aes(x = displ),bins=10)
+```
+```{r}
+ggplot(data = mpg) +
+  geom_density(mapping = aes(x = displ))
+```
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = cyl))
+```
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class))
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class)))
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class),color = class))
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class),fill = class))
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class)),fill = "green")
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class),fill = drv))
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class),fill = drv),position = "dodge")
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = forcats::fct_infreq(class),fill = drv),position = "fill")
+```
+
+############################################################################
+#####################     TWO VARIABLE PLOTS    ############################
+############################################################################
+############################################################################
+
+```{r}
+ggplot(mpg,aes(class, displ)) +
+  geom_boxplot()
+```
+```{r}
+ggplot(mpg,aes(class, displ)) +
+  geom_violin()
+```
+```{r}
+ggplot(mpg,aes(displ,hwy)) +
+  geom_smooth()
+ggplot(mpg,aes(displ,hwy)) +
+  geom_point()
+```
+```{r}
+ggplot(mpg,aes(displ,hwy)) +
+  geom_smooth(se=FALSE,color = "red" , linetype = 2, size = 1
+              )
+```
+
+
+```{r}
+library(dplyr)
+mpg_class_displ <- mpg %>%
+  group_by(class) %>%
+  summarize(mean_displ = mean(displ))
+mpg_class_displ
+```
+
+```{r}
+ggplot(mpg_class_displ, aes(class, mean_displ)) +
+  geom_col()
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_density2d(aes(displ,hwy))
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_bin2d(aes(displ,hwy))
+```
+
+
+```{r}
+# Load the library
+library(leaflet)
+
+# Note: if you do not already installed it, install it with:
+# install.packages("leaflet")
+
+# Background 1: NASA
+m <- leaflet() %>% 
+   addTiles() %>% 
+   setView( lng = 2.34, lat = 48.85, zoom = 5 ) %>% 
+   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012")
+m
+ 
+# Background 2: World Imagery
+m <- leaflet() %>% 
+   addTiles() %>% 
+   setView( lng = 2.34, lat = 48.85, zoom = 3 ) %>% 
+   addProviderTiles("Esri.WorldImagery")
+m
+
+# save the widget in a html file if needed.
+# library(htmlwidgets)
+# saveWidget(m, file=paste0( getwd(), "/HtmlWidget/backgroundMapTile.html", width="1000px"))
+```
+
+##################################################################################
+##################################################################################
+##################################################################################
+##################################################################################
+```{r}
+library(ggplot2)
+mpg
+```
+
+```{r}
+ggplot(data = mpg, aes(x = displ, hwy))+
+  geom_smooth()+
+  geom_point()
+```
+
+```{r}
+ggplot(data = mpg, aes(x = displ, hwy))+
+  geom_point() +
+  geom_density2d()
+```
+
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~class) 
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~class, nrow = 1) 
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~class, nrow = 7) 
+```
+
+```{r}
+ggplot(data = mpg, mapping = aes(class,hwy, color = class)) +
+  geom_boxplot() 
+```
+
+```{r}
+ggplot(data = mpg, mapping = aes(class,hwy)) +
+  geom_boxplot(aes(color = class),show.legend = FALSE)+
+  coord_flip()
+```
+###########################################################################
+###########################################################################
+###########################################################################
+###########################################################################
+
+```{r}
+plot <- ggplot(mpg)+
+  geom_point(aes(displ,hwy))
+plot
+```
+
+```{r}
+plot +
+  labs(
+    title = "tituloooo",
+    subtitle = "subtitulo",
+    caption = "... algo que va abajo de todo, como un pie de pagina",
+    x = "Engine Size (in litres)",
+    y = "Feul efficeineta afsfasfsa"
+  )
+```
+
+
+```{r}
+ggsave("plot1.pdf", plot)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
